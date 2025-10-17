@@ -29,6 +29,10 @@ export default function Keypad({
   onClear,
   onBackspace,
   onOperator,
+  onMemoryClear,
+  onMemoryRecall,
+  onMemoryAdd,
+  onMemorySubtract,
 }) {
   const digitKeys = [
     ["7", "8", "9"],
@@ -78,6 +82,36 @@ export default function Keypad({
           variant="secondary"
           dataTestId="key-backspace"
         />
+        {/* Memory keys */}
+        <Key
+          label="MC"
+          ariaLabel="memory clear"
+          onPress={onMemoryClear}
+          variant="secondary"
+          dataTestId="key-mc"
+        />
+        <Key
+          label="MR"
+          ariaLabel="memory recall"
+          onPress={onMemoryRecall}
+          variant="secondary"
+          dataTestId="key-mr"
+        />
+        <Key
+          label="M+"
+          ariaLabel="memory add"
+          onPress={onMemoryAdd}
+          variant="secondary"
+          dataTestId="key-mplus"
+        />
+        <Key
+          label="M−"
+          ariaLabel="memory subtract"
+          onPress={onMemorySubtract}
+          variant="secondary"
+          dataTestId="key-mminus"
+        />
+        {/* Operators */}
         <Key
           label="+"
           ariaLabel="add"

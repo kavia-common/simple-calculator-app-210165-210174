@@ -173,6 +173,12 @@ button {
   transform: translateY(0);
 }
 
+.key:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  filter: grayscale(10%);
+}
+
 .footer-hint {
   text-align: center;
   color: var(--color-secondary);

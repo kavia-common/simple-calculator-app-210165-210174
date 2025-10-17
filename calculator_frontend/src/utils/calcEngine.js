@@ -24,6 +24,7 @@
  *   operand: string|null,    // current input number as string
  *   accumulator: number|null,// stored value
  *   operator: '+'|'-'|'*'|'/'|null,
+ *   memory: number|null,     // calculator memory register
  *   error: string|null       // error message to show when error state
  * }
  */
@@ -42,6 +43,7 @@ export function initialState() {
     operand: null,
     accumulator: null,
     operator: null,
+    memory: null,
     error: null,
   };
 }
@@ -278,4 +280,66 @@ function formatExpression(expr, op, operandStr) {
   if (!operandStr) return expr;
   const symbol = symbolFor(op);
   return `${expr} ${symbol} ${sanitizeNumber(operandStr)}`.trim();
+}
+
+/**
+// PUBLIC_INTERFACE
+ * memoryClear
+ * Purpose: Clears memory register to null.
+ * GxP Critical: Yes
+ * Parameters: state
+ * Returns: new state with memory set to null
+ */
+export function memoryClear(state) {
+  if (!state) return initialState();
+  return { ...state, memory: null };
+}
+
+/**
+// PUBLIC_INTERFACE
+ * memoryRecall
+ * Purpose: Recalls memory into current operand/display when not in error.
+ * Behavior: If error -> no-op; If memory is null -> no-op; else sets operand/display
+ * GxP Critical: Yes
+ * Returns: new state
+ */
+export function memoryRecall(state) {
+  if (state.error) return state;
+  if (state.memory == null) return state;
+  const valueStr = String(state.memory);
+  return {
+    ...state,
+    operand: valueStr,
+    display: valueStr,
+  };
+}
+
+/**
+// PUBLIC_INTERFACE
+ * memoryAdd
+ * Purpose: Adds current displayed numeric value to memory (treat null as 0).
+ * GxP Critical: Yes
+ * Returns: new state
+ */
+export function memoryAdd(state) {
+  if (state.error) return state;
+  const currentDisplay = Number(state.display || 0);
+  const base = state.memory == null ? 0 : Number(state.memory);
+  if (Number.isNaN(currentDisplay) || Number.isNaN(base)) return state;
+  return { ...state, memory: base + currentDisplay };
+}
+
+/**
+// PUBLIC_INTERFACE
+ * memorySubtract
+ * Purpose: Subtracts current displayed numeric value from memory (treat null as 0).
+ * GxP Critical: Yes
+ * Returns: new state
+ */
+export function memorySubtract(state) {
+  if (state.error) return state;
+  const currentDisplay = Number(state.display || 0);
+  const base = state.memory == null ? 0 : Number(state.memory);
+  if (Number.isNaN(currentDisplay) || Number.isNaN(base)) return state;
+  return { ...state, memory: base - currentDisplay };
 }

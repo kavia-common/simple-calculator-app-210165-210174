@@ -22,6 +22,10 @@ import {
   evaluate,
   clearAll,
   backspace,
+  memoryClear,
+  memoryRecall,
+  memoryAdd,
+  memorySubtract,
 } from "../utils/calcEngine";
 import { logAudit } from "../utils/audit";
 
@@ -46,6 +50,7 @@ export default function Calculator() {
       accumulator: s.accumulator,
       operator: s.operator,
       operand: s.operand,
+      memory: s.memory,
       error: s.error,
     };
   }, []);
@@ -130,6 +135,54 @@ export default function Calculator() {
     });
   }, [safeStateView]);
 
+  const onMemoryClear = useCallback(() => {
+    setState((prev) => {
+      const next = memoryClear(prev);
+      logAudit({
+        action: "MEMORY_CLEAR",
+        before: safeStateView(prev),
+        after: safeStateView(next),
+      });
+      return next;
+    });
+  }, [safeStateView]);
+
+  const onMemoryRecall = useCallback(() => {
+    setState((prev) => {
+      const next = memoryRecall(prev);
+      logAudit({
+        action: "MEMORY_RECALL",
+        before: safeStateView(prev),
+        after: safeStateView(next),
+      });
+      return next;
+    });
+  }, [safeStateView]);
+
+  const onMemoryAdd = useCallback(() => {
+    setState((prev) => {
+      const next = memoryAdd(prev);
+      logAudit({
+        action: "MEMORY_ADD",
+        before: safeStateView(prev),
+        after: safeStateView(next),
+      });
+      return next;
+    });
+  }, [safeStateView]);
+
+  const onMemorySubtract = useCallback(() => {
+    setState((prev) => {
+      const next = memorySubtract(prev);
+      logAudit({
+        action: "MEMORY_SUB",
+        before: safeStateView(prev),
+        after: safeStateView(next),
+      });
+      return next;
+    });
+  }, [safeStateView]);
+
   // Keyboard support
   useEffect(() => {
     const handler = (e) => {
@@ -175,6 +228,10 @@ export default function Calculator() {
         onClear={onClear}
         onBackspace={onBackspace}
         onOperator={onOperator}
+        onMemoryClear={onMemoryClear}
+        onMemoryRecall={onMemoryRecall}
+        onMemoryAdd={onMemoryAdd}
+        onMemorySubtract={onMemorySubtract}
       />
       <div className="footer-hint" aria-hidden="true">
         {footerHint}

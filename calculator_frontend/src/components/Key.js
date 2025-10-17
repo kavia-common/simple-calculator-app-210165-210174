@@ -34,6 +34,7 @@ export default function Key({
   onPress,
   variant = "default",
   dataTestId,
+  disabled = false,
 }) {
   return (
     <button
@@ -43,6 +44,7 @@ export default function Key({
       aria-label={ariaLabel || label}
       onClick={onPress}
       data-testid={dataTestId}
+      disabled={disabled}
     >
       {label}
     </button>
