@@ -1,0 +1,191 @@
+/* 
+// ============================================================================
+// REQUIREMENT TRACEABILITY
+// ============================================================================
+// Requirement ID: REQ-FE-001
+// User Story: The calculator shall have a modern, accessible theme.
+// Acceptance Criteria: Colors, spacing, focus states; responsive layout.
+// GxP Impact: YES - Improves legibility and consistent presentation.
+// Risk Level: LOW
+// Validation Protocol: VP-FE-STYLE-001
+// ============================================================================
+*/
+
+:root {
+  --color-primary: #3b82f6;
+  --color-secondary: #64748b;
+  --color-success: #06b6d4;
+  --color-error: #EF4444;
+  --color-background: #f9fafb;
+  --color-surface: #ffffff;
+  --color-text: #111827;
+
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 8px rgba(0,0,0,0.08);
+  --shadow-lg: 0 10px 15px rgba(0,0,0,0.10);
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+
+  --transition: all 0.2s ease;
+}
+
+html, body, #root {
+  height: 100%;
+  background: var(--color-background);
+  color: var(--color-text);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+button {
+  font: inherit;
+}
+
+.btn {
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--color-primary);
+  color: white;
+  padding: 0.6rem 1rem;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+  cursor: pointer;
+}
+
+.btn:focus-visible {
+  outline: 3px solid rgba(59,130,246,0.4);
+  outline-offset: 2px;
+}
+
+.btn:hover {
+  filter: brightness(0.95);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.container {
+  padding: 1rem;
+}
+
+.calc-wrapper {
+  max-width: 420px;
+  margin: 2rem auto;
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  border: 1px solid rgba(100,116,139,0.08);
+}
+
+.calc-display {
+  padding: 1rem 1.25rem;
+  background: linear-gradient(180deg, rgba(59,130,246,0.06), rgba(249,250,251,1));
+  border-bottom: 1px solid rgba(100,116,139,0.12);
+}
+
+.calc-display .expression {
+  font-size: 0.95rem;
+  color: var(--color-secondary);
+  min-height: 1.2em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.calc-display .value {
+  margin-top: 0.25rem;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--color-text);
+}
+
+.calc-body {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 0.75rem;
+  padding: 0.75rem;
+}
+
+.keypad-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 0.5rem;
+}
+
+.key-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 0.5rem;
+}
+
+.ops-grid {
+  display: grid;
+  grid-template-rows: repeat(5, minmax(0,1fr));
+  gap: 0.5rem;
+}
+
+.key {
+  background: #f3f4f6;
+  color: var(--color-text);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(100,116,139,0.15);
+  padding: 0.9rem;
+  text-align: center;
+  user-select: none;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+}
+
+.key[data-variant="primary"] {
+  background: var(--color-primary);
+  color: white;
+}
+
+.key[data-variant="danger"] {
+  background: var(--color-error);
+  color: white;
+}
+
+.key[data-variant="secondary"] {
+  background: var(--color-secondary);
+  color: white;
+}
+
+.key:focus-visible {
+  outline: 3px solid rgba(59,130,246,0.5);
+  outline-offset: 2px;
+}
+
+.key:hover {
+  filter: brightness(0.97);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.key:active {
+  transform: translateY(0);
+}
+
+.footer-hint {
+  text-align: center;
+  color: var(--color-secondary);
+  font-size: 0.85rem;
+  padding: 0.5rem 0 1rem;
+}
+
+/* Responsive tweaks */
+@media (max-width: 480px) {
+  .calc-wrapper {
+    margin: 1rem;
+  }
+  .calc-display .value {
+    font-size: 1.7rem;
+  }
+}
